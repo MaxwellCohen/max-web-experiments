@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { TopNav } from "@/app/_components/topNav";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Max's Web Experiments",
@@ -26,6 +27,7 @@ export default function RootLayout({
 
             <footer className="w-full text-center">hi from the footer</footer>
           </div>
+          <Toaster />
         </div>
       </body>
     </html>

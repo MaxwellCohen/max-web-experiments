@@ -33,7 +33,10 @@ export function NavigationMenuItems() {
                 href="/experiments/dynamic-images"
                 title="Dynamic Images"
               >Handle images of all sizes with basic css</ListItem>
-              
+              <ListItem
+                href="/experiments/base64"
+                title="Base 64 Encoder / Decoder"
+              >Encode and decode to base 64</ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
