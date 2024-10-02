@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import ResizeSection from "@/components/resize-Section";
+import ResizeSection from "@/components/resizeSection";
 
 export const metadata: Metadata = {
   title: "Responsive Images",
