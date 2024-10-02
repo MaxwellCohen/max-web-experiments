@@ -8,14 +8,14 @@ const ResizeSection = dynamic(
 )
 
 export const metadata: Metadata = {
-  title: "Image resize",
+  title: "Responsive Images",
   description: "fit images into a div regardless of the size of the image",
 };
 
 export default function ResizeImage() {
   return (
-    <main className="container mx-auto">
-      <h1 className="text-2xl font-bold">Image resizer experiment</h1>
+    <>
+      <h1 className="text-2xl font-bold">Dynamic Images</h1>
       <p> Fit images into a div regardless of the size of the image </p>
       <pre>
         {`
@@ -30,7 +30,6 @@ export default function ResizeImage() {
         shape-margin: 0.75rem;
       }
 
-      
       .responsive-container {
         display: flex;
         flex: 1 0 auto;
@@ -54,6 +53,6 @@ export default function ResizeImage() {
         title="Square Image"
         src="https://placehold.co/1000x1000.png?text=1000x1000"
       />
-    </main>
+    </>
   );
 }

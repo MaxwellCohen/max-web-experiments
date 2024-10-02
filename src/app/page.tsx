@@ -1,9 +1,8 @@
-import Link from "next/link";
-
 export default function HomePage() {
   return (
-    <main className="">
-     
-    </main>
+    <>
+      <h1 className="text-2xl">Home Page</h1>
+      <p>Work in progress</p>
+    </>
   );
 }
