@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import { Base64Form } from "./_compoents/base64form";
+import { Base64Form } from "@/components/base64form";
 
 
 

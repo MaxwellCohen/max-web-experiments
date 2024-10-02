@@ -1,11 +1,5 @@
 import { type Metadata } from "next";
-import dynamic from 'next/dynamic'
-
-
-const ResizeSection = dynamic(
-  () => import("@/components/ResizeSection"),
-  { ssr: false }
-)
+import ResizeSection from "@/components/resize-Section";
 
 export const metadata: Metadata = {
   title: "Responsive Images",
