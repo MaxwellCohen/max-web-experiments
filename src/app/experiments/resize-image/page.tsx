@@ -1,5 +1,11 @@
-import { ResizeSection } from "@/components/ResizeSection";
 import { type Metadata } from "next";
+import dynamic from 'next/dynamic'
+
+
+const ResizeSection = dynamic(
+  () => import("@/components/ResizeSection"),
+  { ssr: false }
+)
 
 export const metadata: Metadata = {
   title: "Image resize",

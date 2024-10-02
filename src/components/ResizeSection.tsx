@@ -1,5 +1,5 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
-"use client"
 import useResizeObserver from '@react-hook/resize-observer'
 import {  type RefObject, useLayoutEffect, useRef, useState } from 'react'
 
@@ -22,7 +22,7 @@ const useSize = (target: RefObject<HTMLDivElement>) => {
   return size
 }
 
-export function ResizeSection({ title, src }: { title: string; src: string }) {
+export default function ResizeSection({ title, src }: { title: string; src: string }) {
   const target = useRef<HTMLDivElement>(null)
   const size = useSize(target)
   return (
