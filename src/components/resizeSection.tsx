@@ -65,7 +65,7 @@ export default function ResizeSection({
       </div>
       <div
         ref={target}
-        className="relative flex h-[500px] max-h-full w-[500px] max-w-full flex-grow resize items-center justify-center overflow-hidden border-2 border-solid border-black"
+        className="relative flex h-[500px] w-[500px] flex-grow resize items-center justify-center overflow-hidden border-2 border-solid border-black"
       >
         <img
           src={src}

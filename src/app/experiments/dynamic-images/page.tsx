@@ -17,11 +17,6 @@ export default function ResizeImage() {
         max-width: 100%;
         max-height: 100%;
         height: auto;
-        vertical-align: middle;
-        font-style: italic;
-        background-repeat: no-repeat;
-        background-size: cover;
-        shape-margin: 0.75rem;
       }
 
       .responsive-container {

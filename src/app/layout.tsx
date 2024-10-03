@@ -20,7 +20,7 @@ export default function RootLayout({
         <div className="grid h-screen grid-rows-[auto,1fr]">
           <TopNav />
           <div className="overflow-y-scroll">
-            <main className="container min-h-screen mx-auto">
+            <main className="container min-h-screen">
 
             {children}
             </main>
