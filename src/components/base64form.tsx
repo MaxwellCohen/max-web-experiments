@@ -8,16 +8,18 @@ export function Base64Form() {
 
    const [encodingString, setEncodingString] = useState("");
    const [decodedString, setDecodedString] = useState("");
-   const decode = () => {
-     try {
-       setDecodedString(atob(encodingString));
-     } catch (e) {
-       toast.error('something went wrong try different text')
-     }
-   };
    const encode = () => {
      try {
-       setEncodingString(btoa(decodedString));
+      const str = encodeURIComponent(encodingString);
+      console.log(str)
+       setDecodedString(btoa(str));
+     } catch (e) {
+       toast.error('something went wrong try different text' )
+     }
+   };
+   const decode = () => {
+     try {
+       setEncodingString(decodeURIComponent(atob(decodedString)));
      } catch (e) {
        toast.error('something went wrong try different text')
      }
@@ -31,10 +33,10 @@ export function Base64Form() {
      />
    </div>
    <div className="flex justify-between w-full">
-     <Button type="button" onClick={decode}>
+     <Button type="button" onClick={encode}>
        Encode to base 64
      </Button>
-     <Button type="button" onClick={encode}>
+     <Button type="button" onClick={decode}>
        Decode to ANCII Text
      </Button>
    </div>
