@@ -35,6 +35,10 @@ export function NavigationMenuItems() {
                 href="/experiments/base64"
                 title="Base 64 Encoder / Decoder"
               >Encode and decode to base 64</ListItem>
+              <ListItem
+                href="/experiments/compression-calc"
+                title="Compression Calculator"
+              >See the power of compression</ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
