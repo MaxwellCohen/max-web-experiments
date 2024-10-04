@@ -6,26 +6,20 @@ import { useQuery } from "@tanstack/react-query";
 
 
 async function getCompressInfo(string: string, encoding: CompressionFormat) {
-  console.log("hi");
-  try {
     const byteArray = new TextEncoder().encode(string);
     const cs = new CompressionStream(encoding);
     const writer = cs.writable.getWriter();
-    console.log("hi1");
+
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     writer.write(byteArray);
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     writer.close();
     const arrayBuffer = await new Response(cs.readable).arrayBuffer();
-    console.log({ arrayBuffer, byteArray });
     const compressedLength = arrayBuffer.byteLength;
     // convert from bytes to bits
     const originalSize = byteArray.buffer.byteLength * 8;
 
     return { compressedLength, originalSize };
-  } catch (e) {
-    console.log(e);
-  }
 }
 
 const compressionOptions = ["deflate", "deflate-raw", "gzip"];
@@ -47,6 +41,8 @@ export const CompressionForm = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["compression", text, compressionFormat],
     queryFn: () => getCompressInfo(text, compressionFormat),
+    staleTime: Infinity,
+    
   });
   const savings = data?.originalSize
     ? `${Math.floor(100 - ((data?.compressedLength ?? 0) / (data?.originalSize ?? 1)) * 100)}%`
