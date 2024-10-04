@@ -12,6 +12,29 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
+const experiments = [
+  {
+    href: "/experiments/dynamic-images",
+    title: "Dynamic Images",
+    text: "Handle images of all sizes with basic css",
+  },
+  {
+    href: "/experiments/base64",
+    title: "Base 64 Encoder / Decoder",
+    text: "Encode and decode to base 64",
+  },
+  {
+    href: "/experiments/compression-calc",
+    title: "Compression Calculator",
+    text: "See the power of compression",
+  },
+  {
+    href: "/experiments/qr",
+    title: "QR generator",
+    text: "Simple QR generator",
+  },
+];
+
 export function NavigationMenuItems() {
   return (
     <NavigationMenu className="p-4">
@@ -27,18 +50,15 @@ export function NavigationMenuItems() {
           </Link>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <ListItem
-                href="/experiments/dynamic-images"
-                title="Dynamic Images"
-              >Handle images of all sizes with basic css</ListItem>
-              <ListItem
-                href="/experiments/base64"
-                title="Base 64 Encoder / Decoder"
-              >Encode and decode to base 64</ListItem>
-              <ListItem
-                href="/experiments/compression-calc"
-                title="Compression Calculator"
-              >See the power of compression</ListItem>
+              {experiments.map((experiment) => (
+                <ListItem
+                  key={experiment.href}
+                  href={experiment.href}
+                  title={experiment.title}
+                >
+                  {experiment.text}
+                </ListItem>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -57,13 +77,13 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className,
           )}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
         </a>
