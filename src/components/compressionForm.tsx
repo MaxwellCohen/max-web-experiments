@@ -1,9 +1,8 @@
 "use client";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CompressionComboBox } from "./compressionComboBox";
 import { useQuery } from "@tanstack/react-query";
-
 
 async function getCompressInfo(string: string, encoding: CompressionFormat) {
     const byteArray = new TextEncoder().encode(string);
@@ -18,7 +17,7 @@ async function getCompressInfo(string: string, encoding: CompressionFormat) {
     const compressedLength = arrayBuffer.byteLength;
     // convert from bytes to bits
     const originalSize = byteArray.buffer.byteLength * 8;
-
+    console.log({ compressedLength, originalSize })
     return { compressedLength, originalSize };
 }
 
@@ -28,25 +27,32 @@ const isCompressionFormat = (x: string): x is CompressionFormat =>
 
 export const CompressionForm = () => {
   const [text, setText] = useState("");
+  const [debouncedTextValue, setDebouncedTextValue] = useState("");
+
   const [compressionFormat, setCompressionFormat] =
     useState<CompressionFormat>("gzip");
-  function runCompression(newCompressionFormat: string) {
+  const runCompression = function runCompression(newCompressionFormat: string) {
     if (!newCompressionFormat || !isCompressionFormat(newCompressionFormat)) {
       return;
     }
-
     setCompressionFormat(newCompressionFormat);
   }
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["compression", text, compressionFormat],
-    queryFn: () => getCompressInfo(text, compressionFormat),
-    staleTime: Infinity,
-    
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedTextValue(text);
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [text]);
+  
+  
+  const { data } = useQuery({
+    queryKey: ["compression", debouncedTextValue, compressionFormat],
+    queryFn: () => getCompressInfo(debouncedTextValue, compressionFormat),
   });
   const savings = data?.originalSize
     ? `${Math.floor(100 - ((data?.compressedLength ?? 0) / (data?.originalSize ?? 1)) * 100)}%`
-    : "unknown";
+    : "";
   return (
     <div className="grid grid-cols-1 gap-4 pt-4">
       <label className="grid grid-cols-1 gap-0">
@@ -64,28 +70,27 @@ export const CompressionForm = () => {
           className="h-60"
         />
       </label>
+      {text === debouncedTextValue ? 
+        <div className="grid grid-cols-[200px,1fr]">
+          <div className="col-span-2"><h2 className="text-xl font-bold col-span-2"> Compression Stats:</h2></div>
 
-      {isLoading ? (
-        "calculating"
-      ) : (
-        <div>
-          <h2 className="text-xl font-bold"> Compression Stats:</h2>
-          <p>
-            <strong>String Length:</strong> {text.length}
-          </p>
-          <p>
-            <strong>Original Size:</strong> {data?.originalSize ?? "unknown"}{" "}
-            bites
-          </p>
-          <p>
-            <strong>Compressed Size:</strong>{" "}
-            {data?.compressedLength ?? "unknown"} bites
-          </p>
-          <p>
-            <strong>Savings:</strong> {savings}
-          </p>
-        </div>
-      )}
+          <div className="contents">
+            <div><strong>String Length:</strong></div>
+             <div className="tabular-nums">{debouncedTextValue.length}</div>
+          </div>
+          <div className="contents">
+            <div> <strong>Original Size:</strong></div>
+            <div> <span className="tabular-nums inline-block ">{data?.originalSize.toString().padStart(10, '0') ?? ""}</span> bites</div>
+          </div>
+          <div className="contents">
+            <div><strong>Compressed Size:</strong></div>
+            <div><span className="tabular-nums inline-block">{data?.compressedLength.toString().padStart(10, '0') ?? ""}</span> bites</div>
+          </div>
+          <div className="contents">
+            <div><strong>Savings:</strong> </div>
+            <div><span className="tabular-nums inline-block">{savings ?? ''}</span></div>
+          </div> 
+        </div>: ("Calculating...")}
     </div>
   );
 };
